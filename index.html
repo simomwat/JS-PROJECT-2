@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Currency Converter</title>
+  </head>
+  <body>
+    <header class="container header">
+      <img src="image.jpg" class="image" alt="mylogo" />
+
+      <h1 class="title">Currencies Converters</h1>
+      <div><p id="loader" class="container"></p></div>
+    </header>
+
+    <form id="myform">
+      <div class="container details">
+        <input id="amount" type="number" min="0" />
+
+        <select id="from" name="options"></select>
+        <button id="button" type="button">convert</button>
+
+        <p class="para">TO <span id="pln">0</span> PLN</p>
+      </div>
+    </form>
+
+    <script src="index.js"></script>
+  </body>
+</html>

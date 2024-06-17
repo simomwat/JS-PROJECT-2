@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+}
+
+.title {
+  color: blue;
+
+  margin-top: 35px;
+}
+
+.image {
+  height: 100px;
+  width: 100px;
+}
+
+.header {
+  height: 100px;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.details {
+  padding: 30px;
+  background-color: lightgray;
+  gap: 10px;
+}
+
+.para {
+  font-weight: 700;
+}
+
+#loader {
+  border: 12px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 12px solid blue;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  display: none; /* Initially hide the loader */
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
