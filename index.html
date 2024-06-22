@@ -11,15 +11,19 @@
       <img src="image.jpg" class="image" alt="mylogo" />
 
       <h1 class="title">Currencies Converters</h1>
-      <div><p id="loader" class="container"></p></div>
+      <div><p id="loader" class="container load"></p></div>
     </header>
 
     <form id="myform">
       <div class="container details">
-        <input id="amount" type="number" min="0" />
+        <input name="amount" type="number" min="0.01" step="0.01" required />
 
-        <select id="from" name="options"></select>
-        <button id="button" type="button">convert</button>
+        <select name="code">
+          <option value="CHF">CHF</option>
+          <option value="EUR">EUR</option>
+          <option value="USD">USD</option>
+        </select>
+        <button name="button" type="submit">convert</button>
 
         <p class="para">TO <span id="pln">0</span> PLN</p>
       </div>

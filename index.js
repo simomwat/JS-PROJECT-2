@@ -1,18 +1,8 @@
-const selectFrom = document.getElementById("from");
-const button = document.getElementById("button");
+const button = document.getElementsByName("button");
 const form = document.getElementById("myform");
 const loader = document.getElementById("loader");
 
 const errormessage = document.createElement("p");
-
-window.onload = function () {
-  countryCodes = ["EUR", "CHF", "USD"];
-  countryCodes.forEach((countryCode) => {
-    const optionFrom = document.createElement("option");
-    optionFrom.text = countryCode;
-    selectFrom.add(optionFrom);
-  });
-};
 
 const showError = () => {
   errormessage.textcontent = "We have a problem";
@@ -20,16 +10,24 @@ const showError = () => {
   document.body.appendChild(errormessage);
 };
 
-button.addEventListener("click", () => {
+const amount = document.getElementsByName("amount").value;
+const code = document.getElementsByName("code").value;
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const amount = event.target.amount.value;
+
+  const code = event.target.code.value;
+
+  console.log(code);
+
   errormessage.textContent = "";
 
-  const amount = document.getElementById("amount").value;
-  const from = document.getElementById("from").value;
-
-  // Show the loader
   loader.style.display = "block";
 
-  fetch(`http://api.nbp.pl/api/exchangerates/rates/a/${from}/today/`)
+  fetch(`https://api.nbp.pl/api/exchangerates/rates/a/${code}/today/`)
+    //fetch(`http://api.nbp.pl/api/exchangerates/rates/a/${code}/2024-06-21/`)
     .then((response) => response.json())
 
     .then((data) => {
@@ -39,17 +37,20 @@ button.addEventListener("click", () => {
       }
 
       const rate = data.rates[0].mid;
+      console.log(rate);
+
       const convertedAmount = amount * rate;
+      console.log(convertedAmount);
 
       document.getElementById("pln").innerText = ` ${convertedAmount.toFixed(
         2
       )} `;
-      // Hide the loader
+
       loader.style.display = "none";
     })
     .catch(() => {
       showError();
-      // Hide the loader
+
       loader.style.display = "none";
     });
 });
