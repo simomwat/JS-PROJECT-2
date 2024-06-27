@@ -1,4 +1,3 @@
-const button = document.getElementsByName("button");
 const form = document.getElementById("myform");
 const loader = document.getElementById("loader");
 
@@ -20,15 +19,17 @@ form.addEventListener("submit", (event) => {
 
   const code = event.target.code.value;
 
-  console.log(code);
-
   errormessage.textContent = "";
 
   loader.style.display = "block";
 
   fetch(`https://api.nbp.pl/api/exchangerates/rates/a/${code}/today/`)
-    //fetch(`http://api.nbp.pl/api/exchangerates/rates/a/${code}/2024-06-21/`)
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        return Promise.reject(response);
+      }
+      return response.json();
+    })
 
     .then((data) => {
       if (!data) {
@@ -37,10 +38,8 @@ form.addEventListener("submit", (event) => {
       }
 
       const rate = data.rates[0].mid;
-      console.log(rate);
 
       const convertedAmount = amount * rate;
-      console.log(convertedAmount);
 
       document.getElementById("pln").innerText = ` ${convertedAmount.toFixed(
         2
