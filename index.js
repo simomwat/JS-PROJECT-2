@@ -4,13 +4,10 @@ const loader = document.getElementById("loader");
 const errormessage = document.createElement("p");
 
 const showError = () => {
-  errormessage.textcontent = "We have a problem";
+  errormessage.textcontent = "something is wrong, please try again later";
   errormessage.style.color = "red";
   document.body.appendChild(errormessage);
 };
-
-//const amount = document.getElementsByName("amount").value;
-//const code = document.getElementsByName("code").value;
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -19,13 +16,14 @@ form.addEventListener("submit", (event) => {
 
   const code = event.target.code.value;
 
-  errormessage.textContent = "";
+  errormessage.textContent = "something is wrong, please try again later";
 
   loader.style.display = "block";
 
   fetch(`https://api.nbp.pl/api/exchangerates/rates/A/${code}/`)
     .then((response) => {
       if (!response.ok) {
+        showError();
         return Promise.reject(response);
       }
       return response.json();
@@ -38,15 +36,17 @@ form.addEventListener("submit", (event) => {
       }
 
       const rate = data.rates[0].mid;
-      if (rate) {
-        const convertedAmount = amount * rate;
-
-        document.getElementById("pln").innerText = ` ${convertedAmount.toFixed(
-          2
-        )} `;
-
-        loader.style.display = "none";
+      if (!rate) {
+        showError();
+        return;
       }
+      const convertedAmount = amount * rate;
+
+      document.getElementById("pln").innerText = ` ${convertedAmount.toFixed(
+        2
+      )} `;
+
+      loader.style.display = "none";
     })
     .catch(() => {
       showError();
